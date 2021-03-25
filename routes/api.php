@@ -20,3 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/saveUser', [UserController::class,'saveUser']);
+
+Route::post('/signup',[UserController::class,'signup']);
+
+Route::post('/login', [UserController::class,'login']);
