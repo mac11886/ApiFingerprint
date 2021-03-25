@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
 use PhpParser\JsonDecoder;
@@ -36,12 +37,15 @@ class UserController extends Controller
         }
         return response()->json("login failed",404);
     }
-
+    
     // signup Admin
     function signup(Request $request)
     {
+        $company = new Company();
+        $company ->name = $request->input('company_name');
+        $company->save();
         $admin = new Admin();
-        $admin->company_id = $request->input('company_id');
+        $admin->company_id = $company->id ;
         $admin->name = $request->input('name');
         $admin->username = $request->input('username');
         $admin->password = $request->input('password');
