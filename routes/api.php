@@ -29,4 +29,4 @@ Route::post('/login', [UserController::class,'login']);
 
 Route::post('/attendance',[FingerprintController::class,'saveAttendance']);
 
-Route::get("/get_test", [Controller::class, "getAllData"]);
+Route::get("/getAllData", [Controller::class, "getAllData"]);

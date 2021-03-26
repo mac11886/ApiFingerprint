@@ -24,12 +24,15 @@ class Controller extends BaseController
         //with("company") company is function in Model 
         
         $dataAdmin = Admin::with("company")->get();
-        $dataAttendance = Attendance::get();
+        $dataAttendance = Attendance::with("user","company")->get();
         $dataCompanny = Company::get();
-        $dataDepartment = Department::get();
-        $dataFingerprint = Fingerprint::get();
-        $dataJob = Job::get();
-        $dataUser = User::get();
-        return response()->json(["dataAdmin"=>$dataAdmin]);
+        $dataDepartment = Department::with("company")->get();
+        $dataFingerprint = Fingerprint::with("user")->get();
+        $dataJob = Job::with("department")->get();
+        $dataUser = User::with("company")->get();
+        return response()->json(["dataAdmin"=>$dataAdmin,"dataAttendance"=>$dataAttendance,"dataCompany"=>$dataCompanny,"dataDepartment"=>$dataDepartment,"dataFingerprint"=>$dataFingerprint,"dataJob"=>$dataJob,"dataUser"=>$dataUser]);
     }
 }
+
+
+// return response()->json(["dataAdmin"=>$dataAdmin,"dataAttendance"=>$dataAttendance,"dataCompany"=>$dataCompanny,"dataDepartment"=>$dataDepartment,"dataFingerprint"=>$dataFingerprint,"dataJob"=>$dataJob,"dataUser"=>$dataUser]);

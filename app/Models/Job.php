@@ -11,5 +11,9 @@ class Job extends Model
     
     protected $fillable = ['id','department_id','name'];
 
+    public function department(){
+        return $this->hasOne(Department::class,"id","department_id");
+    }
+
     public $timestamps = false ;
 }

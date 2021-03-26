@@ -10,5 +10,9 @@ class Department extends Model
     use HasFactory;
     protected $fillable = ['id','company_id','name'];
 
+    public function company(){
+        return $this->hasOne(Company::class,"id","company_id");
+    }
+
     public $timestamps = false ;
 }

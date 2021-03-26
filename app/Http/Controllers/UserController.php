@@ -43,7 +43,7 @@ class UserController extends Controller
         if($request->input('password') == $admin->password){
             return response()->json("login success",200);
         }
-        return response()->json("login failed",404);
+        return response()->json("login failed",400);
     }
     
     // signup Admin

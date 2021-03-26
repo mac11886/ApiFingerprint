@@ -12,8 +12,11 @@ class Attendance extends Model
 
     protected $fillable = ['id','user_id','company_id','status','late','timestamp'];
 
-    public function attendance(){
-        
+    public function user(){
+        return $this->hasOne(User::class,"id","user_id");
+    }
+    public function company(){
+        return $this->hasOne(Company::class,"id","user_id");
     }
 
 
