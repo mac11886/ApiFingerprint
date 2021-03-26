@@ -12,5 +12,10 @@ class Attendance extends Model
 
     protected $fillable = ['id','user_id','company_id','status','late','timestamp'];
 
+    public function attendance(){
+        
+    }
+
+
     public $timestamps = false ;
 }

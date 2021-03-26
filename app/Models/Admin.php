@@ -11,5 +11,10 @@ class Admin extends Model
     
     protected $fillable = ['id','company_id','name','username','password'];
 
+
+    //link company_id => name 
+    public function company(){
+        return $this->hasOne(Company::class,"id","company_id");
+    }
     public $timestamps = false ;
 }

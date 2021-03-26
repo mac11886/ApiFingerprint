@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Company;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use PhpParser\JsonDecoder;
 
@@ -22,8 +23,15 @@ class UserController extends Controller
         $user->department_id = $request->input('department_id');
         $user->job_id = $request->input('job_id');
         $user->image_path = $request->input('image_path');
-        $user->save();
-        return response()->json("save user success ", 200);
+        try{
+            $user->save();
+            return response()->json("success", 200);
+        }catch(Exception $e){
+            return response()->json("unsuccess",400);
+        }
+        
+        
+
     }
 
     //login Admin

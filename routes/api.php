@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\FingerprintController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -27,3 +28,5 @@ Route::post('/signup',[UserController::class,'signup']);
 Route::post('/login', [UserController::class,'login']);
 
 Route::post('/attendance',[FingerprintController::class,'saveAttendance']);
+
+Route::get("/get_test", [Controller::class, "getAllData"]);
