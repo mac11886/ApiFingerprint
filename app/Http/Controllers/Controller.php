@@ -19,18 +19,22 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
 
+    // $company is parameter like => www.goole.com/kisra 
+    function getAllData($company){
 
-    function getAllData(){
         //with("company") company is function in Model 
+        if($company != null){
+            $dataAdmin = Admin::with("company")->where("company_id",$company)->get();
+            $dataAttendance = Attendance::with("user","company")->where("company_id",$company)->get();
+            $dataCompanny = Company::where("id",$company)->get();
+            $dataDepartment = Department::with("company")->where("company_id",$company)->get();
+            $dataFingerprint = Fingerprint::with("user")->get();
+            $dataJob = Job::with("department")->get();
+            $dataUser = User::with("company","fingerprint","department","job")->where("company_id",$company)->get();
+            return response()->json(["dataAttendance"=>$dataAttendance,"dataDepartment"=>$dataDepartment,"dataJob"=>$dataJob,"dataUser"=>$dataUser]);
         
-        $dataAdmin = Admin::with("company")->get();
-        $dataAttendance = Attendance::with("user","company")->get();
-        $dataCompanny = Company::get();
-        $dataDepartment = Department::with("company")->get();
-        $dataFingerprint = Fingerprint::with("user")->get();
-        $dataJob = Job::with("department")->get();
-        $dataUser = User::with("company")->get();
-        return response()->json(["dataAdmin"=>$dataAdmin,"dataAttendance"=>$dataAttendance,"dataCompany"=>$dataCompanny,"dataDepartment"=>$dataDepartment,"dataFingerprint"=>$dataFingerprint,"dataJob"=>$dataJob,"dataUser"=>$dataUser]);
+        }
+        return response()->json("company is null ",200);
     }
 }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Company;
+use App\Models\Department;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -59,5 +60,19 @@ class UserController extends Controller
         $admin->password = $request->input('password');
         $admin->save();
         return response()->json("success signup", 200);
+    }
+
+
+    // save Company
+    function saveCompany(Request $request){
+        $company = new Company();
+        $company -> name = $request->input('company_name');
+    }
+
+
+    function saveDepartment(Request $request){
+        
+        $department = new Department();
+        $department -> name = $request -> input('department_name');
     }
 }
