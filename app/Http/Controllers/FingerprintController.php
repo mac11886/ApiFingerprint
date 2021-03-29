@@ -18,6 +18,4 @@ class FingerprintController extends Controller
         $attendance->save();
         return response()->json("save attendance ", 200);
     }
-
-    
 }
