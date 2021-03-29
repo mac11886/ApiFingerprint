@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Company;
 use App\Models\Department;
+use App\Models\Job;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -63,16 +64,56 @@ class UserController extends Controller
     }
 
 
-    // save Company
+    // Company
+    
     function saveCompany(Request $request){
         $company = new Company();
         $company -> name = $request->input('company_name');
+        $company->save();
+        return response()->json("save company success ",200);
     }
 
+    
+    function editCompany(Request $request){
+        $company = Company::where('id', $request->id)->first();
+        $company->update(["name"=>$request->input('company_name')]);
+        return response()->json("edit company success",200);
+    }
+
+    //Department
 
     function saveDepartment(Request $request){
-        
         $department = new Department();
+        $department ->company_id = $request ->input("company_id");
         $department -> name = $request -> input('department_name');
+        $department->save();
+        return response()->json("save department success",200);
     }
+
+    function editDepartment(Request $request){
+        $department = Department::where('id',$request->id)->first();
+        $department -> update(["name"=> $request -> input('department_name')]);
+        return response()->json("edit department success",200);
+    }
+
+    // Job
+
+    function saveJob(Request $request){
+        $job = new Job();
+        $job ->department_id = $request ->input('department_id');
+        $job -> name = $request ->input('job_name');
+        $job ->save();
+        return response()->json("save job success",200);
+    }
+
+    function editJob(Request $request){
+        $job = Job::where('id',$request->id)->first();
+        $job ->update(["name"=> $request -> input('job_name')]);
+        return response()->json("edit job success",200);
+    }
+
+
+
+
+
 }

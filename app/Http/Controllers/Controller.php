@@ -38,5 +38,3 @@ class Controller extends BaseController
     }
 }
 
-
-// return response()->json(["dataAdmin"=>$dataAdmin,"dataAttendance"=>$dataAttendance,"dataCompany"=>$dataCompanny,"dataDepartment"=>$dataDepartment,"dataFingerprint"=>$dataFingerprint,"dataJob"=>$dataJob,"dataUser"=>$dataUser]);
