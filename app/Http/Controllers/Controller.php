@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Attendance;
+use App\Models\Branch;
 use App\Models\Company;
 use App\Models\Department;
 use App\Models\Fingerprint;
@@ -24,17 +25,17 @@ class Controller extends BaseController
 
         //with("company") company is function in Model 
         if($company != null){
+
+            // หน้า main
+            $dataUser = User::with("branch","fingerprint")->where("company_id",$company)->get();
+
+            // หน้า manage branch
             $dataAdmin = Admin::with("company")->where("company_id",$company)->get();
-            $dataAttendance = Attendance::with("user","company")->where("company_id",$company)->get();
-            $dataCompanny = Company::where("id",$company)->get();
-            $dataDepartment = Department::with("company")->where("company_id",$company)->get();
-            $dataFingerprint = Fingerprint::with("user")->get();
-            $dataJob = Job::with("department")->get();
-            $dataUser = User::with("company","fingerprint","department","job")->where("company_id",$company)->get();
-            return response()->json(["dataAttendance"=>$dataAttendance,"dataDepartment"=>$dataDepartment,"dataJob"=>$dataJob,"dataUser"=>$dataUser]);
+
+            return response()->json(["dataUser"=>$dataUser,"dataAdmin"=>$dataAdmin]);
         
         }
-        return response()->json("company is null ",200);
+        return response()->json("company is null ",400);
     }
 }
 

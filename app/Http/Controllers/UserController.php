@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Branch;
 use App\Models\Company;
 use App\Models\Department;
 use App\Models\Job;
@@ -10,6 +11,8 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use PhpParser\JsonDecoder;
+
+use function PHPUnit\Framework\returnSelf;
 
 class UserController extends Controller
 {
@@ -43,7 +46,10 @@ class UserController extends Controller
         $admin = Admin::where('username',$request->username)->first();
 
         if($request->input('password') == $admin->password){
-            return response()->json("login success",200);
+            if ($admin->role == "super"){
+                return response()->json(0, 200);
+            }
+            return response()->json($admin->branch_id, 200);
         }
         return response()->json("login failed",400);
     }
@@ -56,6 +62,8 @@ class UserController extends Controller
         $company->save();
         $admin = new Admin();
         $admin->company_id = $company->id ;
+        $admin->branch_id = 0;
+        $admin->role = "super";
         $admin->name = $request->input('name');
         $admin->username = $request->input('username');
         $admin->password = $request->input('password');
@@ -80,40 +88,85 @@ class UserController extends Controller
         return response()->json("edit company success",200);
     }
 
+    // branch
+
+    function saveBranch(Request $request){
+        $branch = new Branch();
+        $branch->company_id = $request->input("company_id");
+        $branch->name = $request->input("branch_name");
+        $branch->save();
+
+        $admin = new Admin();
+        $admin->company_id = $request->input("company_id");
+        $admin->branch_id = $branch->id;
+        $admin->role = "-";
+        $admin->name = $request->input("name");
+        $admin->username = $request->input("username");
+        $admin->password = $request->input("password");
+        $admin->save();
+        return response()->json(["branch" => $branch, "admin" => $admin], 200);
+    }
+
+    function editBranch(Request $request){
+        $branchName = $request->input("branch_name");
+        $name = $request->input("name");
+        $password = $request->input("password");
+        $branch_id = $request->input("branch_id");
+        $admin_id = $request->input("admin_id");
+
+        $isChange = false;
+
+        $branch = Branch::where("id", $branch_id);
+        $admin = Admin::where("id", $admin_id);
+        
+        if ($branchName != null){
+            $branch->name = $branchName;
+            $branchName->save();
+        }
+        if ($name != null){
+            $admin->name = $name;
+            $isChange = true;
+        }
+        if ($password != null){
+            $admin->password = $password;
+            $isChange = true;
+        }
+        if ($isChange){
+            $admin->save();
+        }
+        return response()->json("success", 200);      
+    }
+
     //Department
 
-    function saveDepartment(Request $request){
-        $department = new Department();
-        $department ->company_id = $request ->input("company_id");
-        $department -> name = $request -> input('department_name');
-        $department->save();
-        return response()->json("save department success",200);
-    }
+    // function saveDepartment(Request $request){
+    //     $department = new Department();
+    //     $department ->company_id = $request ->input("company_id");
+    //     $department -> name = $request -> input('department_name');
+    //     $department->save();
+    //     return response()->json("save department success",200);
+    // }
 
-    function editDepartment(Request $request){
-        $department = Department::where('id',$request->id)->first();
-        $department -> update(["name"=> $request -> input('department_name')]);
-        return response()->json("edit department success",200);
-    }
+    // function editDepartment(Request $request){
+    //     $department = Department::where('id',$request->id)->first();
+    //     $department -> update(["name"=> $request -> input('department_name')]);
+    //     return response()->json("edit department success",200);
+    // }
 
     // Job
 
-    function saveJob(Request $request){
-        $job = new Job();
-        $job ->department_id = $request ->input('department_id');
-        $job -> name = $request ->input('job_name');
-        $job ->save();
-        return response()->json("save job success",200);
-    }
+    // function saveJob(Request $request){
+    //     $job = new Job();
+    //     $job ->department_id = $request ->input('department_id');
+    //     $job -> name = $request ->input('job_name');
+    //     $job ->save();
+    //     return response()->json("save job success",200);
+    // }
 
-    function editJob(Request $request){
-        $job = Job::where('id',$request->id)->first();
-        $job ->update(["name"=> $request -> input('job_name')]);
-        return response()->json("edit job success",200);
-    }
-
-
-
-
+    // function editJob(Request $request){
+    //     $job = Job::where('id',$request->id)->first();
+    //     $job ->update(["name"=> $request -> input('job_name')]);
+    //     return response()->json("edit job success",200);
+    // }
 
 }

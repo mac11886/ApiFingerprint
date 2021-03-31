@@ -11,9 +11,5 @@ class Fingerprint extends Model
 
     protected $fillable = ['id','user_id','first_fingerprint','second_fingerprint'];
 
-    public function user(){
-        return $this->hasOne(User::class,"id","user_id");
-    }
-
     public $timestamps = false ;
 }

@@ -9,12 +9,15 @@ class Admin extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['id','company_id','name','username','password'];
+    protected $fillable = ['id','company_id', 'branch_id', 'role', 'name','username','password'];
 
 
     //link company_id => name 
     public function company(){
         return $this->hasOne(Company::class,"id","company_id");
+    }
+    public function branch(){
+        return $this->hasOne(Branch::class,"id","branch_id");
     }
     public $timestamps = false ;
 }

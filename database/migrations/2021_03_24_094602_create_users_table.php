@@ -17,12 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments("id");
             $table->string("name");
             $table->integer("fingerprinteger_id");
-            $table->integer("company_id");
-            $table->integer("department_id");
-            $table->integer("job_id");
-            $table->string("image_path");
-            
-
+            $table->integer("branch_id");
         });
     }
 

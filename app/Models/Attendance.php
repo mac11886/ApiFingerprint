@@ -15,8 +15,8 @@ class Attendance extends Model
     public function user(){
         return $this->hasOne(User::class,"id","user_id");
     }
-    public function company(){
-        return $this->hasOne(Company::class,"id","user_id");
+    public function branch(){
+        return $this->hasOne(Branch::class,"id","branch_id");
     }
 
 

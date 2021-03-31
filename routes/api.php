@@ -29,10 +29,12 @@ Route::post('/signup',[UserController::class,'signup']);
 Route::post('/login', [UserController::class,'login']);
 Route::post("/saveCompany",[UserController::class,"saveCompany"]);
 Route::post("/editCompany",[UserController::class,"editCompany"]);
-Route::post("/saveDepartment",[UserController::class,"saveDepartment"]);
-Route::post("/editDepartment",[UserController::class,"editDepartment"]);
-Route::post("/saveJob",[UserController::class,"saveJob"]);
-Route::post('/editJob',[UserController::class,"editJob"]);
+Route::post("/saveBranch", [UserController::class, "saveBranch"]);
+Route::post("/editBranch", [UserController::class], "editBranch");
+// Route::post("/saveDepartment",[UserController::class,"saveDepartment"]);
+// Route::post("/editDepartment",[UserController::class,"editDepartment"]);
+// Route::post("/saveJob",[UserController::class,"saveJob"]);
+// Route::post('/editJob',[UserController::class,"editJob"]);
 
 
 

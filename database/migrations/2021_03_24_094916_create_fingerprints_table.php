@@ -15,7 +15,6 @@ class CreateFingerprintsTable extends Migration
     {
         Schema::create('fingerprints', function (Blueprint $table) {
             $table->increments("id");
-            $table->integer("user_id");
             $table->string("first_fingerprint");
             $table->string("second_fingerprint");
         
