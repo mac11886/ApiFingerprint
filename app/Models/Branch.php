@@ -11,6 +11,8 @@ class Branch extends Model
 
     protected $fillable = ["company_id", "name"];
 
+    public $timestamps = false;
+
     public function company(){
         return $this->hasOne(Company::class, "id", "company_id");
     }

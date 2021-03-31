@@ -43,7 +43,7 @@ class UserController extends Controller
 
     function login(Request $request)
     {
-        $admin = Admin::where('username',$request->username)->first();
+        $admin = Admin::with("branch")->where('username',$request->username)->first();
 
         if($request->input('password') == $admin->password){
             if ($admin->role == "super"){
