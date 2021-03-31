@@ -16,7 +16,11 @@ class FingerprintController extends Controller
         $attendance->user_id = $request->input('user_id');
         $attendance->company_id = $request->input('company_id');
         $attendance->status = $request->input('status');
-        $attendance->late = $request->input('late');
+        $time = Carbon::now()->format('H:i');
+        if($time > "9:15"){
+            $attendance->late = "late";
+        }
+        
         $attendance->timestamp =Carbon::now();
         $attendance->save();
         return response()->json("save attendance ", 200);
@@ -53,7 +57,9 @@ class FingerprintController extends Controller
         $profile->image_path = $request->input("image_path");
         $profile->save();
 
+
         return response()->json("save profile success",200);
+
 
     }
 
