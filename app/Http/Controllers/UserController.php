@@ -28,37 +28,34 @@ class UserController extends Controller
         $user->department_id = $request->input('department_id');
         $user->job_id = $request->input('job_id');
         $user->image_path = $request->input('image_path');
-        try{
+        try {
             $user->save();
             return response()->json("success", 200);
-        }catch(Exception $e){
-            return response()->json("unsuccess",400);
+        } catch (Exception $e) {
+            return response()->json("unsuccess", 400);
         }
-        
-        
-
     }
 
     //login Admin
 
     function login(Request $request)
     {
-        $admin = Admin::with("branch")->where('username',$request->username)->first();
+        $admin = Admin::with("branch")->where('username', $request->username)->first();
 
-        if($request->input('password') == $admin->password){
-            return response()->json($admin->branch, 200);
+        if ($request->input('password') == $admin->password) {
+            return response()->json($admin, 200);
         }
-        return response()->json("login failed",400);
+        return response()->json("login failed", 400);
     }
-    
+
     // signup Admin
     function signup(Request $request)
     {
         $company = new Company();
-        $company ->name = $request->input('company_name');
+        $company->name = $request->input('company_name');
         $company->save();
         $admin = new Admin();
-        $admin->company_id = $company->id ;
+        $admin->company_id = $company->id;
         $admin->branch_id = 0;
         $admin->role = "super";
         $admin->name = $request->input('name');
@@ -70,24 +67,27 @@ class UserController extends Controller
 
 
     // Company
-    
-    function saveCompany(Request $request){
+
+    function saveCompany(Request $request)
+    {
         $company = new Company();
-        $company -> name = $request->input('company_name');
+        $company->name = $request->input('company_name');
         $company->save();
-        return response()->json("save company success ",200);
+        return response()->json("save company success ", 200);
     }
 
-    
-    function editCompany(Request $request){
+
+    function editCompany(Request $request)
+    {
         $company = Company::where('id', $request->id)->first();
-        $company->update(["name"=>$request->input('company_name')]);
-        return response()->json("edit company success",200);
+        $company->update(["name" => $request->input('company_name')]);
+        return response()->json("edit company success", 200);
     }
 
     // branch
 
-    function saveBranch(Request $request){
+    function saveBranch(Request $request)
+    {
         $branch = new Branch();
         $branch->company_id = $request->input("company_id");
         $branch->name = $request->input("branch_name");
@@ -101,10 +101,14 @@ class UserController extends Controller
         $admin->username = $request->input("username");
         $admin->password = $request->input("password");
         $admin->save();
-        return response()->json(["branch" => $branch, "admin" => $admin], 200);
+
+        // หน้า manage branch
+        // return response()->json(["dataUser" => $dataUser, "dataAdmin" => $dataAdmin], 200);
+        return response()->json("success", 200);
     }
 
-    function editBranch(Request $request){
+    function editBranch(Request $request)
+    {
         $branchName = $request->input("branch_name");
         $name = $request->input("name");
         $password = $request->input("password");
@@ -113,25 +117,25 @@ class UserController extends Controller
 
         $isChange = false;
 
-        $branch = Branch::where("id", $branch_id);
-        $admin = Admin::where("id", $admin_id);
-        
-        if ($branchName != null){
+        $branch = Branch::where("id", $branch_id)->first();
+        $admin = Admin::where("id", $admin_id)->first();
+
+        if ($branchName != null) {
             $branch->name = $branchName;
-            $branchName->save();
+            $branch->save();
         }
-        if ($name != null){
+        if ($name != null) {
             $admin->name = $name;
             $isChange = true;
         }
-        if ($password != null){
+        if ($password != null) {
             $admin->password = $password;
             $isChange = true;
         }
-        if ($isChange){
+        if ($isChange) {
             $admin->save();
         }
-        return response()->json("success", 200);      
+        return response()->json("success", 200);
     }
 
     //Department
