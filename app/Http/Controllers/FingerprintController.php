@@ -52,9 +52,8 @@ class FingerprintController extends Controller
         $profile->name = $request->input('user_name');
         $profile->fingerprint_id = $fingerprint->id;
         $profile->company_id = $request ->input("company_id");
-        $profile->department_id = $request->input("department_id");
-        $profile->job_id = $request->input("job_id");
-        $profile->image_path = $request->input("image_path");
+        $profile->branch_id = $request->input("branch_id");
+        
         $profile->save();
 
 

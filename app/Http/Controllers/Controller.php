@@ -30,7 +30,7 @@ class Controller extends BaseController
             $dataUser = User::with("branch","fingerprint")->where("company_id",$company)->get();
 
             // หน้า manage branch
-            $dataAdmin = Admin::with("company")->where("company_id",$company)->get();
+            $dataAdmin = Admin::with("company", "branch")->where("company_id",$company)->get();
 
             return response()->json(["dataUser"=>$dataUser,"dataAdmin"=>$dataAdmin]);
         
