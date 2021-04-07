@@ -46,9 +46,6 @@ class UserController extends Controller
         $admin = Admin::with("branch")->where('username',$request->username)->first();
 
         if($request->input('password') == $admin->password){
-            if ($admin->role == "super"){
-                return response()->json(0, 200);
-            }
             return response()->json($admin->branch_id, 200);
         }
         return response()->json("login failed",400);
