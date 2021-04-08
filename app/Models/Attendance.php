@@ -10,7 +10,7 @@ class Attendance extends Model
     use HasFactory;
 
 
-    protected $fillable = ['id','user_id','company_id','status','late','timestamp'];
+    protected $fillable = ['id','user_id','company_id','branch_id','status','late','timestamp'];
 
     public function user(){
         return $this->hasOne(User::class,"id","user_id");
