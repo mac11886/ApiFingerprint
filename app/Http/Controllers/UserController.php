@@ -138,6 +138,14 @@ class UserController extends Controller
         return response()->json("success", 200);
     }
 
+    function setLateTime(Request $request){
+        $company = Company::where("id", $request->input("company_id"))->first();
+        $company->late_time = $request->input("time");
+        $company->save();
+
+        return response()->json("success", 200);
+    }
+
     //Department
 
     // function saveDepartment(Request $request){

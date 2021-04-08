@@ -37,5 +37,13 @@ class Controller extends BaseController
         }
         return response()->json("company is null ",400);
     }
+
+    function getDataUser($branch){
+        if ($branch != null){
+            $dataUser = User::with("branch","fingerprint")->where("branch_id",$branch)->get();
+            return response()->json($dataUser);
+        }
+        return response()->json("not found branch ID", 400);
+    }
 }
 

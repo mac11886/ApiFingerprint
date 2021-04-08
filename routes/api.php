@@ -31,6 +31,8 @@ Route::post("/saveCompany",[UserController::class,"saveCompany"]);
 Route::post("/editCompany",[UserController::class,"editCompany"]);
 Route::post("/saveBranch", [UserController::class, "saveBranch"]);
 Route::post("/editBranch", [UserController::class, "editBranch"]);
+Route::get('/getDataUser/{branch}', [Controller::class, "getDataUser"]);
+Route::post('setLateTime', [UserController::class, "setLateTime"]);
 // Route::post("/saveDepartment",[UserController::class,"saveDepartment"]);
 // Route::post("/editDepartment",[UserController::class,"editDepartment"]);
 // Route::post("/saveJob",[UserController::class,"saveJob"]);
